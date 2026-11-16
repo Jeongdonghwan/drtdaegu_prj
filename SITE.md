@@ -1,0 +1,45 @@
+# 도로시펫 대구점 분양 SEO 사이트 — 매장 1,000
+
+dorothypet.co.kr 의 **대구점**(대구광역시 남구 명덕로 100, 1층 · 010-2178-2433) 기준 매장 홍보 키워드 페이지. 부산본점 사이트(`C:\side_Prj\dorothypet_prj`, dorothypets.co.kr)를 복사해 데이터만 대구로 바꿨다(2026-11-16). 코드 구조 설명·사실 근거·디자인은 부산 사이트 SITE.md 와 같고, 여기에는 다른 점만 적는다.
+
+## 키워드 (`keywords/도로시펫_대구_1000.xlsx`, 키워드 시트가 첫 시트)
+
+- 원본: 부산 매장 키워드 1,000행(`도로시펫 키워드 - 1000개2.csv`)을 부산권 지명 → 대구권 지명으로 바꾼 952개 + 견종 패턴 추가 48개(대구○○분양·○○분양가·○○분양 순, 사이트 분양 분류 건수 많은 견종부터) = 1,000. 지명을 바꾼 348개는 엑셀 '부산 원본 키워드' 열에 원본이 있다.
+- 노출·클릭 수치는 **부산 원본 참고값**(대구 검색량은 측정 안 함). 메인 '많이 찾는 안내' 순서에만 쓴다.
+- 지명 대응(매장 위치 기준): 부산→대구, 사상구(본점 구)→남구, 주례동(본점 동)→대명동, 경남→경북, 창원→구미, 김해→경산, 양산→영천, 거제→포항, 마산→경주, 진해→김천, 장유→하양, 해운대→수성구, 광안리→수성못, 센텀→범어동, 중동→황금동, 서면→동성로, 전포→삼덕동, 남포동→반월당, 양정→만촌동, 개금→침산동, 화명동→칠곡, 구포→태전동, 대연동→봉덕동, 연산동→상인동, 명지→성서, 대저→다사, 강서구→달성군, 정관→율하, 기장→동구, 사하구→서구, 하단→월성동, 장림→진천동. 매핑 스크립트는 세션 스크래치(dg_map.py·dg_fill.py)에 있었고 결과 CSV 는 `raw/도로시펫 키워드 - 대구 1000개.csv`.
+- 키워드 해석(`lib/data.ts`): 동네(앞·뒤, '대구수성구○○'처럼 시 뒤에 구·동이 또 오면 좁은 쪽) → 견종 → 의도. 동네 34곳은 `scripts/build_regions.py` PLACE(대구 7개 구·달성군·동네 19곳, 경북 7곳).
+
+```bash
+python -I scripts/select_keywords.py    # raw CSV → data/pages.json + 엑셀
+python -I scripts/build_regions.py      # data/regions.json (매장 동네 = 대구·경북)
+python -I scripts/make_og.py --force    # public/og (저장소에 포함 — Actions 에 윈도 글꼴이 없어 로컬에서 만든다)
+npx next build                          # → out/
+python -I scripts/dup_pairs.py
+python -I ~/.claude/skills/site-launch/scripts/check_all.py C:/side_Prj/dorothypet_dg_prj
+```
+로컬 미리보기: `python -I -m http.server 18939 --bind 127.0.0.1 --directory out`. `node_modules` 는 부산 프로젝트로 junction.
+
+## 부산 사이트와 다른 점 (`lib/site.ts` STORE·BUSINESS)
+
+- 매장: 도로시펫 대구점, 대구 남구 대명동. 전화 010-2178-2433(공식 사이트 지점 안내). 지점 목록은 대구점·부산본점·광주점 순.
+- '사상구 지정 동물등록 대행업체' 문구·약속 항목 제거(대구점 근거 없음). 동물등록은 "분양 때 안내"로만.
+- 매장 사진 없음(공식 사이트 지점 사진 404) → 첫 화면·og 는 견종 사진 또는 대표 강아지·고양이 사진. 메인 05 는 사진 대신 '찾아오기' 표. 사진을 받으면 `public/images/place-*.webp` + `lib/compose-store.ts` PLACE_PHOTOS 에 채운다.
+- 하단 상호·주소만 표시. 대표·사업자번호는 비어 있으면 숨김(대구점 사업자 정보 확인 뒤 채움).
+- 가맹 창업 링크는 그대로 dorothypetfc.co.kr.
+
+## 배포
+
+- GitHub Actions(`.github/workflows/deploy.yml`): main 푸시마다 + 06:00 KST → `scripts/deploy.sh <SITE_URL>` → deploy 브랜치. og 는 저장소에 있어 Actions 에서 만들지 않는다. 서버(172.237.20.244) `/var/www/dorothypet_dg` 에 nginx 정적 + crontab 매시 `git fetch -q origin deploy && git reset -q --hard origin/deploy`.
+- SITE_URL 기본값은 자리표시자(`https://dorothypetdaegu.co.kr`) — 실제 도메인 받으면 `lib/site.ts` 만 바꾼다. 도메인 전엔 미리보기 포트(noindex)로.
+
+## 색인 지표 (2026-11-16 첫 빌드)
+
+SITE.md 아래 '점검 결과' 절 참고(빌드 뒤 기록).
+
+## 확인 필요 (사용자)
+
+- [ ] 대구 사이트 도메인
+- [ ] 대구점 사업자 정보(상호·대표·사업자번호) — 하단 표기용
+- [ ] 대구점 매장 사진(외관·상담 공간·분양 공간) — 지금은 견종·대표 사진만
+- [ ] 서치어드바이저·서치콘솔 소유확인 코드(`app/layout.tsx` verification)
+- [ ] 대구점 전화 010-2178-2433 이 상담 전화로 맞는지(공식 사이트 지점 안내 번호)
