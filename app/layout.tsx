@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: '/', types: { 'application/rss+xml': [{ url: '/rss.xml', title: `${BRAND} 분양 안내` }] } },
   icons: { icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/icon.png', type: 'image/png', sizes: '192x192' }], apple: '/apple-touch-icon.png' },
-  // TODO 확인 필요: 대구 사이트 서치어드바이저·서치콘솔 소유확인 코드 → verification: { google: '…', other: { 'naver-site-verification': '…' } }
+  verification: { google: '3OWOiNVQufrJPU7Vko6EgfTlxLn-dv5oqSY8HKQvJLA', other: { 'naver-site-verification': 'b603a7bc7375ffdf894826a90be76a151cbe13a8' } },
 };
 
 export const viewport: Viewport = { themeColor: '#ffffff', width: 'device-width', initialScale: 1 };

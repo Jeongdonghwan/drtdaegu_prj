@@ -59,5 +59,5 @@ python -I ~/.claude/skills/site-launch/scripts/check_all.py C:/side_Prj/dorothyp
 - [x] 대구 사이트 도메인 dorothypetdaegu.co.kr (2026-11-18)
 - [ ] 대구점 사업자 정보(상호·대표·사업자번호) — 하단 표기용
 - [ ] 대구점 매장 사진(외관·상담 공간·분양 공간) — 지금은 견종·대표 사진만
-- [ ] 서치어드바이저·서치콘솔 소유확인 코드(`app/layout.tsx` verification)
+- [x] 서치어드바이저·서치콘솔 소유확인 코드(`app/layout.tsx` verification, 2026-11-18)
 - [ ] 대구점 전화 010-2178-2433 이 상담 전화로 맞는지(공식 사이트 지점 안내 번호)
