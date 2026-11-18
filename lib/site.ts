@@ -1,7 +1,7 @@
 // 도로시펫 대구점 사이트 설정 — 연락처·지점·공식 사이트 표기 사실. 출처: dorothypet.co.kr (2026-10-27 수집). 부산본점 사이트(dorothypet_prj)와 코드 구조는 같고 데이터만 대구.
 // 넣지 않는 것: 팝업 '90% 할인' 이벤트, '타 브랜드 대비 1/3 비용' 같은 비교 수치(근거 확인 불가), 분양가(사이트도 '상담 문의').
 
-export const SITE_URL = process.env.SITE_URL || 'https://dorothypetdaegu.co.kr'; // TODO 확인 필요: 대구 사이트 도메인 (사용자에게 받기)
+export const SITE_URL = process.env.SITE_URL || 'https://dorothypetdaegu.co.kr'; // 2026-11-18 사용자 결정
 export const FRANCHISE_SITE = process.env.FRANCHISE_SITE || 'https://dorothypetfc.co.kr'; // 가맹 창업 사이트(dorothypet_franchise_prj)
 export const BRAND = '도로시펫';
 export const BRAND_EN = 'DOROTHY PET';

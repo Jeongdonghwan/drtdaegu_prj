@@ -1,4 +1,4 @@
-"""도로시펫 대구점 키워드 → data/pages.json + keywords/도로시펫_대구_2000.xlsx
+"""도로시펫 대구점 키워드 → data/pages.json + keywords/도로시펫_대구_2500.xlsx
 
   python -I scripts/select_keywords.py
 raw/도로시펫 키워드 - 대구 1000개.csv 1,000행(부산 1,000개2.csv 를 대구권 지명으로 바꾼 952 + 견종 패턴 48) + 확장 1,000행(expand_keywords.py) = 2,000.
@@ -27,7 +27,7 @@ def main():
         assert kw not in seen, kw
         seen.add(kw)
         store.append(dict(kw=kw, slug=slug(kw), set='store', impressions=n(r[1]), clicks=n(r[2]), dupRows=0, added=bool(r[4].strip()) if len(r) > 4 else False, note=r[4].strip() if len(r) > 4 else '', src=r[3].strip() if len(r) > 3 else ''))
-    assert len(store) in (1000, 2000), len(store)
+    assert len(store) in (1000, 2000, 2500), len(store)
     json.dump({'store': store, 'franchise': []}, open(os.path.join(ROOT, 'data', 'pages.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 
     wb = openpyxl.Workbook(); ws = wb.active; ws.title = '키워드'
@@ -36,7 +36,7 @@ def main():
         ws.append([p['kw'], f"/{p['slug']}/", p['impressions'] or None, p['clicks'] or None, p['src'], p['note']])
     for col, w in zip('ABCDEF', (28, 32, 14, 14, 24, 18)): ws.column_dimensions[col].width = w
     os.makedirs(os.path.join(ROOT, 'keywords'), exist_ok=True)
-    wb.save(os.path.join(ROOT, 'keywords', '도로시펫_대구_2000.xlsx'))
+    wb.save(os.path.join(ROOT, 'keywords', '도로시펫_대구_2500.xlsx'))
     print(f'매장 {len(store)} (지명 바꾼 {sum(1 for p in store if p["src"])} · 추가 {sum(1 for p in store if p["added"])})')
 
 

@@ -2,7 +2,11 @@
 
 먼저 `SITE.md`를 읽는다. 부산본점 사이트(`C:\side_Prj\dorothypet_prj`)를 복사해 데이터만 대구로 바꾼 사이트라, 코드 구조·사실 근거·디자인 설명은 부산 사이트 SITE.md 에 있고 여기 SITE.md 는 다른 점만 적는다.
 
-## 현재 상태 (2026-11-16)
+## 현재 상태 (2026-11-18)
+- 매장 2,500쪽(1,000 + 확장 1,500 `scripts/expand_keywords.py`, 2026-11-18 사용자 요청 "500개 더"). 도메인 https://dorothypetdaegu.co.kr, 저장소 https://github.com/Jeongdonghwan/drtdaegu_prj.git (로컬 폴더 이름은 dorothypet_dg_prj 그대로).
+- 분양 가이드 블로그 45편(`content/blog`, 2026-11-18부터 30일 1·2편, `lib/blog.ts`), 주제는 견종·품종·생활(부산과 겹치지 않게). 전부 한 번에 오픈.
+
+## 이전 상태 (2026-11-16)
 - 매장 키워드 2,000(부산 1,000개 지명 치환 952 + 견종 패턴 48 + 확장 1,000 `scripts/expand_keywords.py`) + 메인·전체 안내·소개. 도메인·사업자 정보·매장 사진·소유확인 코드는 사용자에게 받는 중(SITE.md '확인 필요').
 - 빌드·배포는 GitHub Actions(main 푸시마다). 로컬 빌드는 확인용으로만: `npx next build` 후 `python -I -m http.server 18939 --bind 127.0.0.1 --directory out`.
 

@@ -39,7 +39,7 @@ export default function About() {
           <SectionHead no="04" title="도로시펫 지점" sub="지점마다 분양 아이가 달라 방문 전 전화로 확인해 주세요." />
           <dl className="types reveal-group">{BRANCHES.map((b) => <div key={b.name}><dt>{BRAND} {b.name}</dt><dd>{b.address} · {b.phone}</dd></div>)}</dl>
         </section>
-        <p className="prose-p"><Link href="/area/">전체 분양 안내</Link> · <Link href="/">홈</Link></p>
+        <p className="prose-p"><Link href="/area/">전체 분양 안내</Link> · <Link href="/blog/">분양 가이드</Link> · <Link href="/">홈</Link></p>
       </div>
     </main>
   );

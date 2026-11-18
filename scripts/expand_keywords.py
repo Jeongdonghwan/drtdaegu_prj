@@ -1,4 +1,4 @@
-"""매장 키워드 확장 1,000개 → raw/도로시펫 키워드 - 대구 확장 1000개.csv (사용자 요청 2026-11-16 "페이지 천개 더")
+"""매장 키워드 확장 1,500개 → raw/도로시펫 키워드 - 대구 확장 1000개.csv (사용자 요청 2026-11-16 "페이지 천개 더", 2026-11-18 "500개 더" — 앞 1,000은 그대로, 뒤에 500 추가)
 
   python -I scripts/expand_keywords.py
 축(앞에서부터 채우고 1,000에서 끊음), 기존 1,000과 겹치면 건너뜀. 검색량은 측정 안 함(0).
@@ -6,13 +6,17 @@
  2. 대구 동네 33곳(규모 큰 순) × 분양 어휘 8
  3. 경북 도시(포항·경주·김천·하양) × 분양 분류 건수 많은 견종 '분양'
  4. 대구 동네 × 짧은 어휘(강아지·고양이·애견·반려견분양·반려묘분양)
+ 5. (2026-11-18) 견종 × 종류별 패턴 4 — 개: ○○강아지분양·○○새끼·○○분양비용·○○분양샵, 고양이: ○○고양이분양·○○새끼·○○분양비용·○○분양샵
+ 6. 구미·경산·포항 × 견종 '입양'
 """
 import csv, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.path.join(ROOT, 'raw', '도로시펫 키워드 - 대구 1000개.csv')
 OUT = os.path.join(ROOT, 'raw', '도로시펫 키워드 - 대구 확장 1000개.csv')
-TARGET = 1000
+TARGET = 1500
+KIND_PATTERNS = {'dog': ['{}강아지분양', '{}새끼', '{}분양비용', '{}분양샵'], 'cat': ['{}고양이분양', '{}새끼', '{}분양비용', '{}분양샵']}
+CITY_PATTERNS2 = ['구미{}입양', '경산{}입양', '포항{}입양']
 BREED_PATTERNS = ['{}분양', '대구{}분양', '{}분양가', '{}입양', '대구{}입양', '{}가격', '{}분양가격', '구미{}분양', '경산{}분양', '영천{}분양', '대구{}']
 PLACE_WORDS = ['강아지분양', '고양이분양', '애견샵', '펫샵', '애견분양', '강아지입양', '고양이입양', '애견분양샵']
 CITY_PATTERNS = ['포항{}분양', '경주{}분양', '김천{}분양', '하양{}분양']
@@ -42,10 +46,14 @@ def main():
         for b in top: add(pat.format(b['siteName'].replace(' ', '')), '경북도시×견종')
     for w in PLACE_WORDS2:
         for p in plist: add(f'{p}{w}', '동네×짧은어휘')
+    for i in range(4):
+        for b in allb: add(KIND_PATTERNS[b['kind']][i].format((b['siteName'] or b['name']).replace(' ', '')), '견종×종류별패턴')
+    for pat in CITY_PATTERNS2:
+        for b in top: add(pat.format(b['siteName'].replace(' ', '')), '경북도시×견종입양')
     assert len(out) == TARGET, len(out)
     with open(OUT, 'w', encoding='utf-8-sig', newline='') as f:
         w = csv.writer(f); w.writerow(['검색어', '노출수(부산 참고)', '클릭수(부산 참고)', '원본 키워드', '비고'])
-        for k in out: w.writerow([k, '', '', '', '확장(2026-11-16)'])
+        for i, k in enumerate(out): w.writerow([k, '', '', '', '확장(2026-11-16)' if i < 1000 else '확장(2026-11-18)'])
     print(f'확장 {len(out)}: ' + ' · '.join(f'{a} {n}' for a, n in how.items()))
 
 
