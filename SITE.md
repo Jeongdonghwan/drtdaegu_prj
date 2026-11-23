@@ -61,3 +61,8 @@ python -I ~/.claude/skills/site-launch/scripts/check_all.py C:/side_Prj/dorothyp
 - [ ] 대구점 매장 사진(외관·상담 공간·분양 공간) — 지금은 견종·대표 사진만
 - [x] 서치어드바이저·서치콘솔 소유확인 코드(`app/layout.tsx` verification, 2026-11-18)
 - [ ] 대구점 전화 010-2178-2433 이 상담 전화로 맞는지(공식 사이트 지점 안내 번호)
+
+## h1 수식어·레이 구조 적용(2026-11-24)
+
+- 매장 키워드 2,500쪽: 부산본점 사이트(dorothypet_prj)와 같은 `lib/ray.ts`·`app/[slug]/page.tsx`(지점·주소·전화는 `lib/site.ts` STORE·BUSINESS·CONTACT). 분류 줄 → h1(키워드 + `hero-sub` 수식어 3~4벌) → 설명 → 핵심 요약(결론 + 정보 칸 4) → 번호 절 6개(한 문단, 4개 h2 에 키워드 전체) → 자주 묻는 질문 → 관련 링크 3묶음. title·주소 그대로, description 은 §5-3(45~80자)으로 새로. ItemList 항목마다 og 썸네일.
+- 측정(`npx tsx scripts/x_check.ts`): h1 중복 0 · description 55~80자, 중복 0 · 조사 오류 0 · 절 문단 평균 190자(공백 제외) · 같은 문장 같은 견종 평균 25%(최대 47%), 같은 동네 24%, 무작위 15% · check_all: SEO 구조·중복 문서(표본 본문 평균 1,722자, 같은 문장 평균 5%)·AI 티·화면 버그·답 페이지 틀 통과, FAQ·Q&A 미달(/qna/ 없음 — 이번 작업 전부터)
